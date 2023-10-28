@@ -31,26 +31,40 @@ func (err *CustomError) Error() string {
 	return err.errorMessage
 }
 
-func main() {
-	a := 2
-	b := 3
-	res, err := SumOfDigit(a, b)
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println("my name is vishal", res)
+type Student struct {
+	Id    int    `json:"Id"`
+	Name  string `json:"Name"`
+	Posts []StudentPost
 }
 
-func SumOfDigit(a, b int) (int, error) {
+type StudentPost struct {
+	PostId   int    `json:"PostId"`
+	PostName string `json:"PostName"`
+	Comments string `json:"Comments"`
+}
 
-	defer HandlePanic()
-	if b > a {
-		panic("Number is small ")
+func main() {
+
+	data := make([]map[int]string, 0)
+	for i := 0; i < 5; i++ {
+		test := map[int]string{
+			i: fmt.Sprintf("Alice is:%d", i),
+		}
+		data = append(data, test)
 	}
-	sum := a + b
-	return sum, nil
 
-	//panic("divison by zero")
+	fmt.Println(data)
+	//b := 300
+	//fmt.Println("address of a ", &a)
+	//fmt.Println("address of a ", &b)
+	//SumOfDigit(&a)
+	//fmt.Println("after function address of a ", a)
+	//fmt.Println("address of a ", b)
+}
+
+func SumOfDigit(a *int) {
+	*a *= *a
+	//fmt.Println("address of a...", *a)
 }
 
 func HandlePanic() {

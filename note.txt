@@ -91,3 +91,60 @@ func HandlePanic() {
 		fmt.Println("Handle Panic", r)
 	}
 }
+
+-------------------------------------Why we need point -----------------
+
+pointer basically better for memory allocation
+mean create one varible and their value and access from anywhere using different variable
+
+i.e
+
+x :=6
+
+p:=&x
+b:=&x
+------------------------------student struct --------------
+type Student struct {
+	Id    int    `json:"Id"`
+	Name  string `json:"Name"`
+	Posts []StudentPost
+}
+
+type StudentPost struct {
+	PostId   int    `json:"PostId"`
+	PostName string `json:"PostName"`
+	Comments string `json:"Comments"`
+}
+
+func main() {
+
+	var data []StudentPost
+	data = append(data, StudentPost{PostId: 234, PostName: "vishal borhade", Comments: "This is vishal and i am learning go lang"})
+	data = append(data, StudentPost{PostId: 124, PostName: "shivani thankar", Comments: "vishal.."})
+
+	for _, value := range data {
+		fmt.Println(value.PostId)
+	}
+
+	//fmt.Println(data)
+	//b := 300
+	//fmt.Println("address of a ", &a)
+	//fmt.Println("address of a ", &b)
+	//SumOfDigit(&a)
+	//fmt.Println("after function address of a ", a)
+	//fmt.Println("address of a ", b)
+}
+
+----------------------------------------------json unmarshal --------------
+
+n Go, you can unmarshal (decode) data from a serialized format, such as JSON, XML, or other data formats, into a Go data structure. The encoding/json package is commonly used for unmarshaling JSON data. 
+Here's how to unmarshal data from a JSON string into a Go struct:
+
+-------------------------------------------map struct-------------
+data := make([]map[int]string, 0)
+	for i := 0; i < 5; i++ {
+		test := map[int]string{
+			i: fmt.Sprintf("Alice is:%d", i),
+		}
+		data = append(data, test)
+	}
