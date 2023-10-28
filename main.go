@@ -24,8 +24,22 @@ func (r Rectangle) Area(a, b int) int {
 }*/
 
 func main() {
-
-	defer fmt.Println("hii")
 	fmt.Println("hi my name is vishal")
+	SlicePanic()
+	fmt.Println("hi my name is borhade")
+}
 
+func SlicePanic() {
+	defer HandlePanic()
+	res := []int{1, 2, 3}
+	fmt.Println("len", res[3])
+	//defer HandlePanic()
+	//panic("divison by zero")
+}
+
+func HandlePanic() {
+	r := recover()
+	if r != nil {
+		fmt.Println("Handle Panic", r)
+	}
 }
