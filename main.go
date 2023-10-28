@@ -23,17 +23,33 @@ func (r Rectangle) Area(a, b int) int {
 	return res
 }*/
 
-func main() {
-	fmt.Println("hi my name is vishal")
-	SlicePanic()
-	fmt.Println("hi my name is borhade")
+type CustomError struct {
+	errorMessage string
 }
 
-func SlicePanic() {
+func (err *CustomError) Error() string {
+	return err.errorMessage
+}
+
+func main() {
+	a := 2
+	b := 3
+	res, err := SumOfDigit(a, b)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("my name is vishal", res)
+}
+
+func SumOfDigit(a, b int) (int, error) {
+
 	defer HandlePanic()
-	res := []int{1, 2, 3}
-	fmt.Println("len", res[3])
-	//defer HandlePanic()
+	if b > a {
+		panic("Number is small ")
+	}
+	sum := a + b
+	return sum, nil
+
 	//panic("divison by zero")
 }
 
