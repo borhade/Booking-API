@@ -1,0 +1,6 @@
+1)go mod init folder-name(booking-app)
+2)create one file and give name main.go
+3)give package name i.e package main
+
+Youtube channel:
+https://www.youtube.com/@Go-Guruji/videos
