@@ -148,3 +148,57 @@ data := make([]map[int]string, 0)
 		}
 		data = append(data, test)
 	}
+------------------------------select statment with channel data--------------
+
+In Go, the select statement is used to wait on multiple channel operations and 
+perform different actions depending on which channel is ready to proceed.
+ It's a powerful tool for managing concurrent operations. Here's a simple example of how to use select:
+
+ example:
+
+
+func main() {
+	ch1 := make(chan int)
+	ch2 := make(chan string)
+	go second(ch2)
+	go first(ch1)
+
+	fmt.Println("hi this gorutine in goalng")
+	select {
+	case val1 := <-ch1:
+		fmt.Println("Yes I am execute", val1)
+	case val2 := <-ch2:
+		fmt.Println("I am second", val2)
+		//default:
+		//fmt.Println("Yes I am default case")
+	}
+
+	//b := 300
+	//fmt.Println("address of a ", &a)
+	//fmt.Println("address of a ", &b)
+	//SumOfDigit(&a)
+	//fmt.Println("after function address of a ", a)
+	//fmt.Println("address of a ", b)
+}
+
+func first(ch1 chan int) {
+	time.Sleep(4 * time.Second)
+	ch1 <- 23
+	//fmt.Println("My name is vishal")\
+	//fmt.Println("address of a...", *a)
+}
+
+func second(ch2 chan string) {
+	time.Sleep(2 * time.Second)
+	ch2 <- "Hello, Go!"
+}
+ In this example, we have two goroutines sending data on two different channels, 
+ ch1 and ch2. The select statement waits for data to be received on either channel and then executes the corresponding case. Here's what happens:
+
+The first goroutine sends the integer value 42 on ch1 after a 2-second delay.
+The second goroutine sends the string "Hello, Go!" on ch2 after a 1-second delay.
+The select statement waits for data from either channel. Whichever channel 
+provides data first will have its associated case executed. In this case, ch2 is
+ the first to provide data, so the message "Received from ch2: Hello, Go!" is printed.
+
+

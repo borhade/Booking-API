@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
 /*type Rectangle struct {
@@ -44,16 +45,21 @@ type StudentPost struct {
 }
 
 func main() {
+	ch1 := make(chan int)
+	ch2 := make(chan string)
+	go second(ch2)
+	go first(ch1)
 
-	data := make([]map[int]string, 0)
-	for i := 0; i < 5; i++ {
-		test := map[int]string{
-			i: fmt.Sprintf("Alice is:%d", i),
-		}
-		data = append(data, test)
+	fmt.Println("hi this gorutine in goalng")
+	select {
+	case val1 := <-ch1:
+		fmt.Println("Yes I am execute", val1)
+	case val2 := <-ch2:
+		fmt.Println("I am second", val2)
+		//default:
+		//fmt.Println("Yes I am default case")
 	}
 
-	fmt.Println(data)
 	//b := 300
 	//fmt.Println("address of a ", &a)
 	//fmt.Println("address of a ", &b)
@@ -62,9 +68,16 @@ func main() {
 	//fmt.Println("address of a ", b)
 }
 
-func SumOfDigit(a *int) {
-	*a *= *a
+func first(ch1 chan int) {
+	time.Sleep(4 * time.Second)
+	ch1 <- 23
+	//fmt.Println("My name is vishal")\
 	//fmt.Println("address of a...", *a)
+}
+
+func second(ch2 chan string) {
+	time.Sleep(2 * time.Second)
+	ch2 <- "Hello, Go!"
 }
 
 func HandlePanic() {
