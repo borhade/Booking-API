@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sync"
 	"time"
 )
 
@@ -44,40 +45,45 @@ type StudentPost struct {
 	Comments string `json:"Comments"`
 }
 
-func main() {
-	ch1 := make(chan int)
-	ch2 := make(chan string)
-	go second(ch2)
-	go first(ch1)
+type abc struct {
+	x int
+	y int
+}
 
-	fmt.Println("hi this gorutine in goalng")
-	select {
-	case val1 := <-ch1:
-		fmt.Println("Yes I am execute", val1)
-	case val2 := <-ch2:
-		fmt.Println("I am second", val2)
-		//default:
-		//fmt.Println("Yes I am default case")
+var mu = sync.Mutex{}
+var money = 100
+
+func debit() {
+	for i := 1; i <= 1000; i++ {
+		mu.Lock()
+		money = money + 10
+		mu.Unlock()
 	}
-
-	//b := 300
-	//fmt.Println("address of a ", &a)
-	//fmt.Println("address of a ", &b)
-	//SumOfDigit(&a)
-	//fmt.Println("after function address of a ", a)
-	//fmt.Println("address of a ", b)
+	time.Sleep(1 * time.Millisecond)
+	fmt.Println("debit done..")
 }
 
-func first(ch1 chan int) {
-	time.Sleep(4 * time.Second)
-	ch1 <- 23
-	//fmt.Println("My name is vishal")\
-	//fmt.Println("address of a...", *a)
+func withdraw() {
+
+	for i := 1; i <= 1000; i++ {
+		mu.Lock()
+		money = money - 10
+		mu.Unlock()
+	}
+	time.Sleep(1 * time.Millisecond)
+	fmt.Println("withdraw done..")
+
 }
 
-func second(ch2 chan string) {
-	time.Sleep(2 * time.Second)
-	ch2 <- "Hello, Go!"
+func main() {
+	go debit()
+	go withdraw()
+	time.Sleep(1 * time.Millisecond)
+	fmt.Println("Money...", money)
+}
+
+func SwapDigit(i, j *int) {
+	*i, *j = *j, *i
 }
 
 func HandlePanic() {
